@@ -4,7 +4,7 @@ import Editor from "@/components/editor";
 export default function Home() {
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-between p-16 backdrop-blur-2xl" style={{ backgroundColor: '#202224' }}>
+      <main className="flex min-h-screen flex-col items-center justify-between mt-[-30px] p-16 backdrop-blur-2xl" style={{ backgroundColor: '#202224' }}>
         <div className="z-10 w-full items-center justify-between text-sm lg:flex">
             <div className="flex flex-col gap-4 lg:w-full">
               <div className="flex items-center gap-4">
@@ -24,7 +24,7 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-              <div className="flex h-screen w-full">
+              <div className="flex h-auto w-full">
                 <Editor />
               </div>
             </div>
