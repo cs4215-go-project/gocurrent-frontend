@@ -5,13 +5,18 @@ import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/com
 import { Button } from "@/components/ui/button"
 import { FaPlay } from "react-icons/fa"
 import { AiOutlineReload } from "react-icons/ai"
-// import { UnControlled as CodeMirror } from "react-codemirror2"
+import AceEditor from "react-ace";
 
-const defaultProgram: string = "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Hello, World!\")\n}";
+import "ace-builds/src-noconflict/mode-golang"
+import "ace-builds/src-noconflict/theme-solarized_dark"
+import "ace-builds/src-noconflict/ext-language_tools";
+
+const defaultProgram: string = "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Hello, World!\")\n}\n";
+const outputPrompt: string = 'Click "Go!" to run your code!';
 
 export default function Editor() {
     const [code, setCode] = useState<string>(defaultProgram)
-    const [output, setOutput] = useState<string>('Click "Go!" to run your code!');
+    const [output, setOutput] = useState<string>(outputPrompt);
 
     const compileAndRun = () => {
         setTimeout(() => {
@@ -21,12 +26,15 @@ export default function Editor() {
 
     const resetCode = () => {
         setCode(defaultProgram);
+        setOutput(outputPrompt);
     }
 
-    const renderLineNumber = (lines: string[]) => {
-        return lines.map((_, index) => (
-            <span key={index} className="select-none opacity-50 flex">{index + 1}</span>
-        ))
+    const aceOptions = {
+        enableBasicAutocompletion: false,
+        enableLiveAutocompletion: true,
+        enableSnippets: false,
+        showLineNumbers: true,
+        tabSize: 4,
     }
 
     return (
@@ -35,18 +43,32 @@ export default function Editor() {
                 <Card>
                     <CardHeader>
                         <CardTitle className="text-lg font-bold" style={{ color: '#02dcff'}}>Code</CardTitle>
-                        <CardDescription className="text-sm">Run your Go code here!</CardDescription>
+                        <CardDescription className="text-sm">Run your Go code here.</CardDescription>
                     </CardHeader>
-                    <CardContent className="p-8 mt-[-20px] h-[400px]">
-                        <textarea spellCheck="false" value={code} onChange={(e) => setCode(e.target.value)} className="w-full h-full !rounded-lg font-mono p-8 bg-gray-900 text-gray-50 resize-none" />
+                    <CardContent className="p-8 mt-[-23px] h-[400px]">
+                        <AceEditor
+                            mode="golang"
+                            theme="solarized_dark"
+                            value={code}
+                            onChange={setCode}
+                            name="editor"
+                            width="100%"
+                            height="100%"
+                            fontSize={14}
+                            showPrintMargin={true}
+                            showGutter={true}
+                            highlightActiveLine={true}
+                            setOptions={aceOptions}
+                            className="!rounded-lg"
+                        />
                     </CardContent>
                 </Card>
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-2">
-                    <Button className="!text-white transform hover:scale-95 border border-transparent hover:border-gray-300 hover:bg-gray-100" style={{ backgroundColor: '#007d9c' }} onClick={compileAndRun}>
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-2 mt-3">
+                    <Button className="!text-white font-bold transform active:scale-95 transition duration-75 !bg-sky-500 hover:bg-sky-700" onClick={compileAndRun}>
                         <FaPlay className="mr-1" /> 
                         Go!
                     </Button>
-                    <Button className="!text-white transform hover:scale-95 border border-transparent hover:border-gray-300 hover:bg-gray-100" style={{ backgroundColor: '#007d9c' }} onClick={resetCode}>
+                    <Button className="!text-white font-bold transform active:scale-95 transition duration-75 !bg-sky-500 hover:bg-sky-700" onClick={resetCode}>
                         <AiOutlineReload className="mr-1" />
                         Reset
                     </Button>
@@ -56,7 +78,7 @@ export default function Editor() {
                 <Card>
                     <CardHeader>
                         <CardTitle className="text-lg font-bold" style={{ color: '#02dcff'}}>Output</CardTitle>
-                        <CardDescription className="text-sm">View the compilation and execution output.</CardDescription>
+                        <CardDescription className="text-sm">View compilation and execution output.</CardDescription>
                     </CardHeader>
                     <CardContent className="p-0 h-[200px]">
                         <div style={{ height: 200 }} className="font-mono p-8 mt-[-20px]">{output}</div>
