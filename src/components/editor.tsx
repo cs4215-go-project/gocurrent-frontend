@@ -38,14 +38,14 @@ export default function Editor() {
     }
 
     return (
-        <div className="grid grid-cols-12 items-start gap-6 h-screen w-full mx-auto">
+        <div className="grid grid-cols-12 items-start gap-6 w-full mx-auto">
             <div className="flex flex-col col-span-7">
                 <Card>
                     <CardHeader>
                         <CardTitle className="text-lg font-bold" style={{ color: '#02dcff'}}>Code</CardTitle>
                         <CardDescription className="text-sm">Run your Go code here.</CardDescription>
                     </CardHeader>
-                    <CardContent className="p-8 mt-[-23px] h-[400px]">
+                    <CardContent className="p-8 mt-[-23px] h-[600px]">
                         <AceEditor
                             mode="golang"
                             theme="solarized_dark"
@@ -80,7 +80,7 @@ export default function Editor() {
                         <CardTitle className="text-lg font-bold" style={{ color: '#02dcff'}}>Output</CardTitle>
                         <CardDescription className="text-sm">View compilation and execution output.</CardDescription>
                     </CardHeader>
-                    <CardContent className="p-0 h-[200px]">
+                    <CardContent className="p-0 h-[400px]">
                         <div style={{ height: 200 }} className="font-mono p-8 mt-[-20px]">{output}</div>
                     </CardContent>
                 </Card>
