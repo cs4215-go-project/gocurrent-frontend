@@ -24,7 +24,6 @@ export default function RootLayout({
           <title>GoCurrent</title>
           <link rel="icon" href="/go-redeyes.png" />
         </head>
-        <Header />
         <body className={inter.className}>{children}</body>
       </html>
     </>
