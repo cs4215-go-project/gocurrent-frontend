@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Editor from "@/components/editor";
+import Header from "@/components/header";
 
 export default function Home() {
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-between mt-[-30px] p-16 backdrop-blur-2xl" style={{ backgroundColor: '#202224' }}>
-        <div className="z-10 w-full items-center justify-between text-sm lg:flex">
+      <Header/>
+      <div className="flex min-h-screen flex-col items-center justify-between mt-[-40px] p-16" style={{ backgroundColor: '#202224' }}>
+        <div className="w-full items-center justify-between text-sm lg:flex mt-[-20px]">
             <div className="flex flex-col gap-4 lg:w-full">
               <div className="flex items-center gap-4">
                 <Image
@@ -29,7 +31,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-      </main>
+      </div>
     </>
   );
 }
