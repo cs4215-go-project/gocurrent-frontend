@@ -5,6 +5,7 @@ import Header from "@/components/header";
 export default function Home() {
   return (
     <>
+      <Header />
       <div className="flex min-h-screen flex-col items-center justify-between mt-[-40px] p-16" style={{ backgroundColor: '#202224' }}>
         <div className="w-full items-center justify-between text-sm lg:flex mt-[-20px]">
             <div className="flex flex-col gap-4 lg:w-full">
