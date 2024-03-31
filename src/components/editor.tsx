@@ -12,16 +12,31 @@ import "ace-builds/src-noconflict/theme-solarized_dark"
 import "ace-builds/src-noconflict/ext-language_tools";
 
 const defaultProgram: string = "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Hello, World!\")\n}\n";
-const outputPrompt: string = 'Click "Go!" to run your code!';
+const outputPrompt: string[] = ['Click "Go!" to run your code!'];
 
 export default function Editor() {
     const [code, setCode] = useState<string>(defaultProgram);
-    const [output, setOutput] = useState<string>(outputPrompt);
+    const [output, setOutput] = useState<string[]>(outputPrompt);
+
+    const changeOutput = (new_output: string[]) => {
+        setOutput(new_output);
+    }
+
+    const addOutput = (to_print: any) => {
+        setOutput([...output, String(to_print)]);
+    }
 
     const compileAndRun = () => {
         setTimeout(() => {
-            setOutput('Hello, World!');
+            changeOutput(["Compiling..."]);
+            setTimeout(() => {
+                changeOutput(["Running..."]);
+                setTimeout(() => {
+                    addOutput("Hello, World!");
+                }, 1000);
+            }, 1000);
         }, 1000);
+        // TODO: import Machine from go-slang, pass in setOutput to Machine constructor
     }
 
     const resetCode = () => {
@@ -80,8 +95,8 @@ export default function Editor() {
               <CardTitle className="text-lg font-bold" style={{ color: '#02dcff'}}>Output</CardTitle>
               <CardDescription className="text-sm">View compilation and execution output.</CardDescription>
             </CardHeader>
-            <CardContent className="p-0 h-[400px]">
-              <div style={{ height: 200 }} className="font-mono p-8 mt-[-20px]">{output}</div>
+            <CardContent className="h-[450px]">
+              <div style={{ height: 350 }} className="font-mono whitespace-pre-wrap overflow-y-auto">{output.join('\n')}</div>
             </CardContent>
           </Card>
         </div>
