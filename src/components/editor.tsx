@@ -11,9 +11,7 @@ import "ace-builds/src-noconflict/mode-golang"
 import "ace-builds/src-noconflict/theme-solarized_dark"
 import "ace-builds/src-noconflict/ext-language_tools";
 
-import parse from "go-slang/parser/parser";
-import Machine from "go-slang/src/vm/machine";
-import { compile } from 'go-slang/src/vm/compiler';
+import parseCompileAndRun from "go-slang/src/vm/machine";
 
 const defaultProgram: string = "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t1 + 2\n}\n";
 const outputPrompt: string[] = ['Click "Go!" to run your code!'];
@@ -25,13 +23,7 @@ export default function Editor() {
     const [output, setOutput] = useState<string[]>(outputPrompt);
 
     const compileAndRun = () => {
-        const parsed = parse(code);
-        const instructions = compile(parsed);
-
-        const machine = new Machine(MEMORY_SIZE, instructions, setOutput);
-        const result = machine.run();
-
-        setOutput([result.toString()]);
+        setOutput([parseCompileAndRun(MEMORY_SIZE, code, setOutput)]);
     }
 
     const resetCode = () => {
