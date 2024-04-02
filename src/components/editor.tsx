@@ -11,32 +11,27 @@ import "ace-builds/src-noconflict/mode-golang"
 import "ace-builds/src-noconflict/theme-solarized_dark"
 import "ace-builds/src-noconflict/ext-language_tools";
 
-const defaultProgram: string = "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Hello, World!\")\n}\n";
+import parse from "go-slang/parser/parser";
+import Machine from "go-slang/src/vm/machine";
+import { compile } from 'go-slang/src/vm/compiler';
+
+const defaultProgram: string = "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t1 + 2\n}\n";
 const outputPrompt: string[] = ['Click "Go!" to run your code!'];
+
+const MEMORY_SIZE: number = 1024;
 
 export default function Editor() {
     const [code, setCode] = useState<string>(defaultProgram);
     const [output, setOutput] = useState<string[]>(outputPrompt);
 
-    const changeOutput = (new_output: string[]) => {
-        setOutput(new_output);
-    }
-
-    const addOutput = (to_print: any) => {
-        setOutput([...output, String(to_print)]);
-    }
-
     const compileAndRun = () => {
-        setTimeout(() => {
-            changeOutput(["Compiling..."]);
-            setTimeout(() => {
-                changeOutput(["Running..."]);
-                setTimeout(() => {
-                    addOutput("Hello, World!");
-                }, 1000);
-            }, 1000);
-        }, 1000);
-        // TODO: import Machine from go-slang, pass in setOutput to Machine constructor
+        const parsed = parse(code);
+        const instructions = compile(parsed);
+
+        const machine = new Machine(MEMORY_SIZE, instructions, setOutput);
+        const result = machine.run();
+
+        setOutput([result.toString()]);
     }
 
     const resetCode = () => {
