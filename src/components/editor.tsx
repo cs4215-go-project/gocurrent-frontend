@@ -16,7 +16,8 @@ import parseCompileAndRun from "go-slang/src/vm/machine";
 const defaultProgram: string = "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t1 + 2\n}\n";
 const outputPrompt: string[] = ['Click "Go!" to run your code!'];
 
-const MEMORY_SIZE: number = 1024;
+const NODE_SIZE: number = 16;
+const MEMORY_SIZE: number = 15 * NODE_SIZE;
 
 export default function Editor() {
     const [code, setCode] = useState<string>(defaultProgram);
