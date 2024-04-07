@@ -11,27 +11,20 @@ import "ace-builds/src-noconflict/mode-golang"
 import "ace-builds/src-noconflict/theme-solarized_dark"
 import "ace-builds/src-noconflict/ext-language_tools";
 
-import parse from "go-slang/parser/parser";
-import Machine from "go-slang/src/vm/machine";
-import { compile } from 'go-slang/src/vm/compiler';
+import parseCompileAndRun from "go-slang/src/vm/machine";
 
 const defaultProgram: string = "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t1 + 2\n}\n";
 const outputPrompt: string[] = ['Click "Go!" to run your code!'];
 
-const MEMORY_SIZE: number = 1024;
+const NODE_SIZE: number = 16;
+const MEMORY_SIZE: number = 128 * NODE_SIZE;
 
 export default function Editor() {
     const [code, setCode] = useState<string>(defaultProgram);
     const [output, setOutput] = useState<string[]>(outputPrompt);
 
     const compileAndRun = () => {
-        const parsed = parse(code);
-        const instructions = compile(parsed);
-
-        const machine = new Machine(MEMORY_SIZE, instructions, setOutput);
-        const result = machine.run();
-
-        setOutput([result.toString()]);
+        parseCompileAndRun(MEMORY_SIZE, code, setOutput);
     }
 
     const resetCode = () => {
@@ -55,7 +48,7 @@ export default function Editor() {
               <CardTitle className="text-lg font-bold" style={{ color: '#02dcff'}}>Code</CardTitle>
               <CardDescription className="text-sm">Run your Go code here.</CardDescription>
             </CardHeader>
-            <CardContent className="p-8 mt-[-23px] h-[600px]">
+            <CardContent className="p-8 mt-[-23px] h-[400px]">
               <AceEditor
                   mode="golang"
                   theme="solarized_dark"
@@ -90,7 +83,7 @@ export default function Editor() {
               <CardTitle className="text-lg font-bold" style={{ color: '#02dcff'}}>Output</CardTitle>
               <CardDescription className="text-sm">View compilation and execution output.</CardDescription>
             </CardHeader>
-            <CardContent className="h-[450px]">
+            <CardContent className="h-[375px]">
               <div style={{ height: 350 }} className="font-mono whitespace-pre-wrap overflow-y-auto">{output.join('\n')}</div>
             </CardContent>
           </Card>
