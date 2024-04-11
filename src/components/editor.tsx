@@ -21,10 +21,11 @@ const MEMORY_SIZE: number = 128 * NODE_SIZE;
 
 export default function Editor() {
     const [code, setCode] = useState<string>(defaultProgram);
-    const [output, setOutput] = useState<string[]>(outputPrompt);
+    const [output, setOutput] = useState<any[]>(outputPrompt);
 
-    const compileAndRun = () => {
-        parseCompileAndRun(MEMORY_SIZE, code, setOutput);
+    const compileAndRun = async () => {
+        // setOutput([...output, parseCompileAndRun(MEMORY_SIZE, code, setOutput)]);
+        await parseCompileAndRun(MEMORY_SIZE, code, setOutput);
     }
 
     const resetCode = () => {
