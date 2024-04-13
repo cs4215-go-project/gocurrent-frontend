@@ -1,7 +1,8 @@
 import Link from "next/link"
 import { JSX, SVGProps } from "react"
+import CodeTemplateDropdown from "./templateDropdown"
 
-export default function Header() {
+export default function Header({ setCode }: { setCode: React.Dispatch<React.SetStateAction<string>> }) {
   return (
     <header className="bg-sky-500 mb-10">
       <div className="flex items-center w-full h-14 px-4 md:px-10">
@@ -15,9 +16,11 @@ export default function Header() {
             </Link>
           </div>
         </nav>
+        <CodeTemplateDropdown setCode={setCode} />
         <div className="flex justify-end items-center space-x-4 w-full">
-          <div className="flex justify-center mr-1 hover:scale-95">
+          <div className="flex justify-center mr-1 hover:scale-95 transition-transform duration-75">
             <Link
+              target="_blank"
               className="flex items-center text-white dark:text-white tracking-wide dark:hover:text-gray-200"
               href="https://github.com/cs4215-go-project"
             >
@@ -25,17 +28,19 @@ export default function Header() {
               GitHub
             </Link>
           </div>
-          <div className="flex justify-center mr-1 hover:scale-95">
+          <div className="flex justify-center mr-1 hover:scale-95 transition-transform duration-75">
             <Link
+            target="_blank"
             className="flex items-center text-white dark:text-white tracking-wide dark:hover:text-gray-200"
-            href="#"
+            href="https://docs.google.com/document/d/1LugQ8D__eP2CPGEj4_1_hYqJTPoAyQsod_JTLu45F3k/edit?usp=sharing"
             >
               <FilesIcon className="h-4 w-4 mr-1"/>
               Docs
             </Link>
           </div>
-          <div className="flex justify-center hover:scale-95">
+          <div className="flex justify-center hover:scale-95 transition-transform duration-75">
             <Link
+              target="_blank"
               className="flex items-center text-white dark:text-white tracking-wide dark:hover:text-gray-200"
               href="#"
             >

@@ -14,20 +14,22 @@ import "ace-builds/src-noconflict/ext-language_tools";
 import parseCompileAndRun from "go-slang/src/vm/machine";
 
 const defaultProgram: string = "package main\n\nfunc main() {\n\t\n}\n";
-const outputPrompt: string[] = ['Click "Go!" to run your code!'];
+const outputPrompt: string[] = ['click "Go!" to run your code!'];
 
 const NODE_SIZE: number = 16;
 const MEMORY_SIZE: number = 640 * NODE_SIZE;
 
-export default function Editor() {
-    const [code, setCode] = useState<string>(defaultProgram);
+export default function Editor({ code, setCode }: { code: string, setCode: React.Dispatch<React.SetStateAction<string>> }) {
+    // const [code, setCode] = useState<string>(defaultProgram);
     const [output, setOutput] = useState<any[]>(outputPrompt);
 
     const compileAndRun = async () => {
         // setOutput([...output, parseCompileAndRun(MEMORY_SIZE, code, setOutput)]);
         const result = await parseCompileAndRun(MEMORY_SIZE, code, setOutput);
         if (result instanceof Error) {
-            setOutput([`${result.message}`]);
+            setOutput((prev) => [...prev, `${result.message}`]);
+        } else {
+            setOutput((prev) => [...prev, "", "program exited successfully"]);
         }
     }
 
