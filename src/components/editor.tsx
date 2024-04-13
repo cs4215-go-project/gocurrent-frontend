@@ -13,11 +13,11 @@ import "ace-builds/src-noconflict/ext-language_tools";
 
 import parseCompileAndRun from "go-slang/src/vm/machine";
 
-const defaultProgram: string = "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t1 + 2\n}\n";
+const defaultProgram: string = "package main\n\nfunc main() {\n\t\n}\n";
 const outputPrompt: string[] = ['Click "Go!" to run your code!'];
 
 const NODE_SIZE: number = 16;
-const MEMORY_SIZE: number = 128 * NODE_SIZE;
+const MEMORY_SIZE: number = 640 * NODE_SIZE;
 
 export default function Editor() {
     const [code, setCode] = useState<string>(defaultProgram);
@@ -25,7 +25,10 @@ export default function Editor() {
 
     const compileAndRun = async () => {
         // setOutput([...output, parseCompileAndRun(MEMORY_SIZE, code, setOutput)]);
-        await parseCompileAndRun(MEMORY_SIZE, code, setOutput);
+        const result = await parseCompileAndRun(MEMORY_SIZE, code, setOutput);
+        if (result instanceof Error) {
+            setOutput([`${result.message}`]);
+        }
     }
 
     const resetCode = () => {
