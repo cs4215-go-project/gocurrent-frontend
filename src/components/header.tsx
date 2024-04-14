@@ -4,7 +4,7 @@ import CodeTemplateDropdown from "./templateDropdown"
 
 export default function Header({ setCode }: { setCode: React.Dispatch<React.SetStateAction<string>> }) {
   return (
-    <header className="bg-sky-500 mb-10">
+    <header className="bg-sky-500 mb-10 !font-medium">
       <div className="flex items-center w-full h-14 px-4 md:px-10">
         <nav className="flex h-10 items-center space-x-4 text-sm font-medium">
           <div className="relative">

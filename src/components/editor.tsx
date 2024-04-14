@@ -21,14 +21,17 @@ const MEMORY_SIZE: number = 640 * NODE_SIZE;
 
 export default function Editor({ code, setCode }: { code: string, setCode: React.Dispatch<React.SetStateAction<string>> }) {
     // const [code, setCode] = useState<string>(defaultProgram);
+    const [isError, setIsError] = useState<boolean>(false);
     const [output, setOutput] = useState<any[]>(outputPrompt);
 
     const compileAndRun = async () => {
         // setOutput([...output, parseCompileAndRun(MEMORY_SIZE, code, setOutput)]);
         const result = await parseCompileAndRun(MEMORY_SIZE, code, setOutput);
         if (result instanceof Error) {
+            setIsError(true);
             setOutput((prev) => [...prev, `${result.message}`]);
         } else {
+            setIsError(false);
             setOutput((prev) => [...prev, "", "program exited successfully"]);
         }
     }
@@ -52,9 +55,9 @@ export default function Editor({ code, setCode }: { code: string, setCode: React
           <Card>
             <CardHeader className="ml-2">
               <CardTitle className="text-lg font-bold" style={{ color: '#02dcff'}}>Code</CardTitle>
-              <CardDescription className="text-sm">Run your Go code here.</CardDescription>
+              <CardDescription className="text-sm">Run your Go code here or choose a program from the templates above!</CardDescription>
             </CardHeader>
-            <CardContent className="p-8 mt-[-23px] h-[400px]">
+            <CardContent className="p-8 mt-[-23px] h-[500px]">
               <AceEditor
                   mode="golang"
                   theme="solarized_dark"
@@ -87,10 +90,10 @@ export default function Editor({ code, setCode }: { code: string, setCode: React
           <Card>
             <CardHeader>
               <CardTitle className="text-lg font-bold" style={{ color: '#02dcff'}}>Output</CardTitle>
-              <CardDescription className="text-sm">View compilation and execution output.</CardDescription>
+              <CardDescription className="text-sm">View compilation and execution output here.</CardDescription>
             </CardHeader>
             <CardContent className="h-[375px]">
-              <div style={{ height: 350 }} className="font-mono whitespace-pre-wrap overflow-y-auto">{output.join('\n')}</div>
+              <div style={{ height: 350 }} className={`font-mono ${isError ? 'text-red-500' : ''} whitespace-pre-wrap overflow-y-auto`}>{output.join('\n')}</div>
             </CardContent>
           </Card>
         </div>

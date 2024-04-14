@@ -28,7 +28,7 @@ export default function Home() {
                     GoCurrent
                   </h1>
                   <p className="text-gray-500 dark:text-gray-400 mt-2">
-                    An online playground for a sublanguage of Go.
+                    An online playground for a concurrent sublanguage of Go.
                   </p>
                 </div>
               </div>
