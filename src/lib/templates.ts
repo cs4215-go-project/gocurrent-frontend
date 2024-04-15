@@ -51,6 +51,23 @@ func main() {
 }
 `;
 
+const fibonacciLoopProgram = `package main
+
+func main() {
+    n := 10
+    a := 0
+    b := 1
+    for i := 0; i < n; i++ {
+        println(a)
+        temp := a
+        a = b
+        b = temp + b
+    }
+
+    println(a) // 55
+}
+`;
+
 const factorialProgram = `package main
 
 func factorial(n int) int {
@@ -61,7 +78,21 @@ func factorial(n int) int {
 }
 
 func main() {
-    println(factorial(5))
+    println(factorial(5)) // 120
+}
+`;
+
+const fibonacciProgram = `package main
+
+func fibonacci(n int) int {
+    if n <= 1 {
+        return n
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+func main() {
+    println(fibonacci(10)) // 55
 }
 `;
 
@@ -181,18 +212,33 @@ func main() {
 const deadlockProgram = `package main
 
 func main() {
-    ch := make(chan int)
-    ch <- 42
-    println(<-ch)
+    var wg WaitGroup
+
+    wgAdd(wg, 1)
+    wgWait(wg) // blocks here
+
+    go func() {
+        wgAdd(wg, 1)
+        wgWait(wg) // blocks here
+    }()
+
+    go func() {
+        wgAdd(wg, 1)
+        wgWait(wg) // blocks here
+    }()
+
+    // deadlock! all goroutines are blocked
 }
 `;
 
 export const templates: any = {
     'Calculator': calcProgram,
     'Conditionals': ifElseProgram,
-    'Loop': loopsProgram,
+    'Simple Loop': loopsProgram,
     'Loop with Break': loopsProgramWithBreak,
-    'Functions': factorialProgram,
+    'Iterative Fibonacci': fibonacciLoopProgram,
+    'Recursive Fibonacci': fibonacciProgram,
+    'Recursive Factorial': factorialProgram,
     'Basic Concurrency': concurrencyProgram,
     'Channels': channelsProgram,
     'Concurrent Print': concurrentPrintProgram,
