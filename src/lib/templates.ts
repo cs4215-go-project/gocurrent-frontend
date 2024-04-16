@@ -21,7 +21,11 @@ const loopsProgram = `package main
 
 func main() {
     n := 10
-    for i := 0; i < n; i++ {
+    for i := 0; i < n; i = i + 2 {
+        println(i)
+    }
+    
+    for i := 1 i < n; i = i + 2 {
         println(i)
     }
 }
@@ -30,9 +34,7 @@ func main() {
 const loopsProgramWithBreak = `package main
 
 func main() {
-    var i int = 0
-    var j int = 0
-    var k int = 0
+    var i, j, k int
     for i < 5 {
         i++
         for j < 5 {
@@ -55,8 +57,7 @@ const fibonacciLoopProgram = `package main
 
 func main() {
     n := 10
-    a := 0
-    b := 1
+    a, b := 0, 1
     for i := 0; i < n; i++ {
         println(a)
         temp := a
@@ -119,17 +120,21 @@ func main() {
 
 const channelsProgram = `package main
 
+const N int = 5
+
+func sender(ch chan int) {
+    for i := 0; i < N; i++ {
+        ch <- i
+    }
+    close(ch)
+}()
+
 func main() {
     ch := make(chan int)
     
-    go func() {
-        for i := 0; i < 5; i++ {
-            ch <- i
-        }
-        close(ch)
-    }()
-
-    for i := 0; i < 5; i++ {
+    go sender(ch)
+    
+    for i := 0; i < N; i++ {
         println(<-ch)
     }
 }
@@ -180,12 +185,16 @@ func main() {
 const sleepProgram = `package main
 
 func main() {
-    go func() {
-        sleep(1000)
-        println(100)
-    }()
-    sleep(5000)
-    println(10)
+go func() {
+    for i := 0; i < 10; i++ {
+        println(i)
+        sleep(500)
+    }
+}()
+
+for i := 0; i < 7; i++ {
+    println(i)
+    sleep(1000)
 }
 `;
 
