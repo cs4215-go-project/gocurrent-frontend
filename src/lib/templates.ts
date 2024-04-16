@@ -120,19 +120,19 @@ func main() {
 
 const channelsProgram = `package main
 
-const N int = 5
+const N int = 10
 
-func sender(ch chan int) {
-    for i := 0; i < N; i++ {
+func sender(ch chan int, init int) {
+    for i := init; i < N; i = i + 2 {
         ch <- i
     }
-    close(ch)
 }()
 
 func main() {
     ch := make(chan int)
     
-    go sender(ch)
+    go sender(ch, 0)
+    go sender(ch, 1)
     
     for i := 0; i < N; i++ {
         println(<-ch)
