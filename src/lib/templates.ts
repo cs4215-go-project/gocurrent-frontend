@@ -9,10 +9,10 @@ func main() {
 const ifElseProgram = `package main
 
 func main() {
-    if 42 > 56 {
+    if 42 > 420 {
         println(42)
     } else {
-        println(56)
+        println(420)
     }
 }
 `;
@@ -142,11 +142,13 @@ func main() {
 
 const concurrentCounterProgram = `package main
 
+const FINAL_COUNT int = 15
+
 func main() {
     ch := make(chan int)
     var wg WaitGroup
 
-    for i := 0; i < 15; i++ {
+    for i := 0; i < FINAL_COUNT; i++ {
         wgAdd(wg, 1)
         go func() {
             count := <-ch 
@@ -162,6 +164,30 @@ func main() {
     println(<-ch) // 15
 }
 `;
+
+const channelAsMutexProgram = `package main
+
+var x int
+
+func increment(wg WaitGroup, ch chan int) {
+    ch <- 1
+    x++
+    <-ch
+    wgDone(wg)
+}
+
+func main() {
+    var wg WaitGroup
+    ch := make(chan int, 1) // channel of size 1 acts as a mutex
+    
+    for i := 0; i < 1000; i++ {
+        wgAdd(wg, 1)
+        go increment(wg, ch)
+    }
+    
+    wgWait(wg)
+    println(x)
+}`;
 
 const concurrentPrintProgram = `package main
 
@@ -184,21 +210,26 @@ func main() {
 
 const sleepProgram = `package main
 
-func main() {
-go func() {
-    for i := 0; i < 10; i++ {
-        println(i)
-        sleep(500)
-    }
-}()
+const NUM_SECS int = 5
 
-for i := 0; i < 7; i++ {
-    println(i)
-    sleep(1000)
-}
+func main() {
+    go func() {
+        for i := 0; i < NUM_SECS * 2; i++ {
+            println(i)
+            sleep(500)
+        }
+    }()
+
+    for i := 0; i < NUM_SECS; i++ {
+        println(i)
+        sleep(1000)
+    }
 `;
 
 const sendOnClosedChannelProgram = `package main
+
+const N1 int = 5
+const N2 int = 3
 
 func printNums(ch chan int, n int) {
     for i := 0; i < n; i++ {
@@ -209,10 +240,10 @@ func printNums(ch chan int, n int) {
 
 func main() {
     ch := make(chan int, 1)
-    go printNums(ch, 5)
-    go printNums(ch, 3)
+    go printNums(ch, N1)
+    go printNums(ch, N2)
     
-    for i := 0; i < 5 + 3; i++ {
+    for i := 0; i < N1 + N2; i++ {
         println(<-ch)
     }
 }
@@ -251,6 +282,7 @@ export const templates: any = {
     'Basic Concurrency': concurrencyProgram,
     'Channels': channelsProgram,
     'Mutual Exclusion': concurrentCounterProgram,
+    'Channel as Mutex': channelAsMutexProgram,
     'Sleep': sleepProgram,
     'Channel Closing': sendOnClosedChannelProgram,
     'Deadlock': deadlockProgram,
