@@ -24,10 +24,10 @@ export default function Home() {
                   className="flex items-center justify-center w-24 h-24 p-4"
                 /> 
                 <div>
-                  <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-50" style={{ color: '#02dcff'}}>
+                  <h1 className="text-4xl font-extrabold text-gray-50" style={{ color: '#02dcff'}}>
                     GoCurrent
                   </h1>
-                  <p className="text-gray-500 dark:text-gray-400 mt-2">
+                  <p className="text-gray-400 mt-2">
                     An online playground for a concurrent sublanguage of Go.
                   </p>
                 </div>

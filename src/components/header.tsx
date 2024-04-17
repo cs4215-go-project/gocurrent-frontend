@@ -9,7 +9,7 @@ export default function Header({ setCode }: { setCode: React.Dispatch<React.SetS
         <nav className="flex h-10 items-center space-x-4 text-sm font-medium">
           <div className="relative">
             <Link
-              className="flex h-10 items-center rounded-md text-gray-900 hover:text-gray-900 dark:text-gray-100 dark:hover:text-gray-50 hover:scale-95 transition-transform duration-75"
+              className="flex h-10 items-center rounded-md text-gray-100 hover:text-gray-50 hover:scale-95 transition-transform duration-75"
               href="/"
             >
               <HomeIcon className="ml-3"/>
@@ -21,7 +21,7 @@ export default function Header({ setCode }: { setCode: React.Dispatch<React.SetS
           <div className="flex justify-center mr-1 hover:scale-95 transition-transform duration-75">
             <Link
               target="_blank"
-              className="flex items-center text-white dark:text-white tracking-wide dark:hover:text-gray-200"
+              className="flex items-center text-white tracking-wide hover:text-gray-200"
               href="https://github.com/cs4215-go-project"
             >
               <GithubIcon className="h-4 w-4 mr-1"/>
@@ -31,7 +31,7 @@ export default function Header({ setCode }: { setCode: React.Dispatch<React.SetS
           <div className="flex justify-center mr-1 hover:scale-95 transition-transform duration-75">
             <Link
             target="_blank"
-            className="flex items-center text-white dark:text-white tracking-wide dark:hover:text-gray-200"
+            className="flex items-center text-white tracking-wide hover:text-gray-200"
             href="https://docs.google.com/document/d/1LugQ8D__eP2CPGEj4_1_hYqJTPoAyQsod_JTLu45F3k/edit?usp=sharing"
             >
               <FilesIcon className="h-4 w-4 mr-1"/>
@@ -41,7 +41,7 @@ export default function Header({ setCode }: { setCode: React.Dispatch<React.SetS
           <div className="flex justify-center hover:scale-95 transition-transform duration-75">
             <Link
               target="_blank"
-              className="flex items-center text-white dark:text-white tracking-wide dark:hover:text-gray-200"
+              className="flex items-center text-white tracking-wide hover:text-gray-200"
               href="#"
             >
               <InfoIcon className="h-4 w-4 mr-1"/>

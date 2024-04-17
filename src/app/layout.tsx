@@ -26,7 +26,7 @@ export default function RootLayout({
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link rel="icon" href="/go-redeyes.png" />
         </head>
-        <body className={inter.className}>{children}</body>
+        <body className={`${inter.className} dark`}>{children}</body>
       </html>
     </>
   );
