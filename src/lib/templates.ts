@@ -187,7 +187,8 @@ func main() {
     
     wgWait(wg)
     println(x)
-}`;
+}
+`;
 
 const concurrentPrintProgram = `package main
 
@@ -224,7 +225,24 @@ func main() {
         println(i)
         sleep(1000)
     }
+}
 `;
+
+const returnedClosureProgram = `package main
+
+func makef(ch chan int, x int) func (int) int {
+    z := 100
+    f := func(y int) {
+        ch <- x + y + z
+    }
+    return f
+}
+
+func main() {
+    ch := make(chan int)
+    go makef(ch, 3)(2)
+    println(<-ch) // 105
+}`;
 
 const sendOnClosedChannelProgram = `package main
 
@@ -284,6 +302,7 @@ export const templates: any = {
     'Mutual Exclusion': concurrentCounterProgram,
     'Channel as Mutex': channelAsMutexProgram,
     'Sleep': sleepProgram,
+    'Return Closure': returnedClosureProgram,
     'Channel Closing': sendOnClosedChannelProgram,
     'Deadlock': deadlockProgram,
 };
