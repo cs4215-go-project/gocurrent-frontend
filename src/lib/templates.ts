@@ -186,7 +186,7 @@ func main() {
     }
     
     wgWait(wg)
-    println(x)
+    println(x) // 1000
 }
 `;
 
@@ -242,7 +242,8 @@ func main() {
     ch := make(chan int)
     go makef(ch, 3)(2)
     println(<-ch) // 105
-}`;
+}
+`;
 
 const sendOnClosedChannelProgram = `package main
 
