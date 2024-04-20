@@ -11,7 +11,7 @@ import "ace-builds/src-noconflict/mode-golang"
 import "ace-builds/src-noconflict/theme-solarized_dark"
 import "ace-builds/src-noconflict/ext-language_tools";
 
-import parseCompileAndRun from "go-slang/src/vm/machine";
+import parseCompileAndRun from "go-slang";
 
 const defaultProgram: string = "package main\n\nfunc main() {\n\t\n}\n";
 const outputPrompt: string[] = ['click "Go!" to run your code!'];
